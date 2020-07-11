@@ -6,28 +6,53 @@ import Search from "./components/search";
 
 class App extends React.Component {
     state = {
-        user: null
+        user: null,
+        error: null,
+        loading: false
     }
 
     fetchUserData = async (username) => {
-        //Fetch Github API
-        try {
-            const res = await fetch('https://api.github.com/users/' + username)
-            if (res.ok) {
-                const data = await res.json()
-                // console.log(data)
-                return this.setState({
-                    user: data
+        this.setState({
+            loading: true
+        }, async () => {
+            //Fetch Github API
+            try {
+                const res = await fetch('https://api.github.com/users/' + username)
+                if (res.ok) {
+                    const data = await res.json()
+                    // console.log(data)
+                    return this.setState({
+                        user: data,
+                        error: null,
+                        loading: false
+                    })
+                }
+
+                const error = (await res.json()).message
+
+                this.setState({
+                    error: error,
+                    loading: false
+                })
+            } catch (e) {
+                console.log(e)
+                this.setState({
+                    error: 'Some error',
+                    loading: false
                 })
             }
-        } catch (e) {
-            console.log(e)
-        }
+        })
+
     }
 
     render() {
+        const {error, loading} = this.state
         return (
-            <Search fetchData={this.fetchUserData}/>
+            <div>
+                <Search fetchData={this.fetchUserData}/>
+                {(loading && (<p>Loading...</p>))}
+                {error && <p className="text-danger">{error}</p>}
+            </div>
         );
     }
 }
