@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Search from "./components/search";
+// import Search2 from "./components/search2";
+// import Search3 from "./components/search3";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = {
+        user: null
+    }
+
+    fetchUserData = async (username) => {
+        //Fetch Github API
+        try {
+            const res = await fetch('https://api.github.com/users/' + username)
+            if (res.ok) {
+                const data = await res.json()
+                // console.log(data)
+                return this.setState({
+                    user: data
+                })
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    render() {
+        return (
+            <Search fetchData={this.fetchUserData}/>
+        );
+    }
 }
 
 export default App;
