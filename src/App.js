@@ -3,6 +3,8 @@ import './App.css';
 import Search from "./components/search";
 // import Search2 from "./components/search2";
 // import Search3 from "./components/search3";
+import UserCard from "./components/UserCard";
+
 
 class App extends React.Component {
     state = {
@@ -46,12 +48,13 @@ class App extends React.Component {
     }
 
     render() {
-        const {error, loading} = this.state
+        const {error, loading, user} = this.state
         return (
             <div>
                 <Search fetchData={this.fetchUserData}/>
                 {(loading && (<p>Loading...</p>))}
                 {error && <p className="text-danger">{error}</p>}
+                {!loading && !error && user && <UserCard user={this.state.user}/>}
             </div>
         );
     }
