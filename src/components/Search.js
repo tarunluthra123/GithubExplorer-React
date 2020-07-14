@@ -1,24 +1,27 @@
-import React from "react";
+import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
-    }
-    state = {
-        username: ''
+
+        this.state = {
+            username: props.username || '',
+        };
     }
 
-    handleUsernameChange = (e) => {
-        const value = e.target.value
+    handleUserNameChange = e => {
+        const value = e.target.value;
 
         this.setState({
-            username: value
-        })
-    }
+            username: value,
+        });
+    };
 
     render() {
-        const {fetchData} = this.props
-        const {username} = this.state
+        const {history} = this.props;
+        const {username} = this.state;
+
         return (
             <div className="bg-dark">
                 <div className="container py-5">
@@ -29,15 +32,17 @@ class Search extends React.Component {
                                     <input
                                         className="form-control"
                                         value={username}
-                                        onChange={this.handleUsernameChange}
+                                        onChange={this.handleUserNameChange}
                                         type="text"
                                         name="username"
                                         placeholder="Enter username"
                                     />
                                 </div>
                                 <div className="col-3">
-                                    <button onClick={() => fetchData(username)}
-                                            className="btn btn-large btn-success">Search
+                                    <button
+                                        onClick={() => history.push(`/${username}`)}
+                                        className="btn btn-large btn-success">
+                                        Search
                                     </button>
                                 </div>
                             </div>
@@ -45,8 +50,8 @@ class Search extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Search
+export default withRouter(Search);
