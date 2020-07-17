@@ -1,3 +1,9 @@
+## Github Explorer App - ReactJS
+This React App allows users to search user profiles over Github and view their public repositories. You can view this app [here](https://tarunluthra123.github.io/GithubExplorer-React/). <br>
+
+Built on a Ubuntu 18.04(Linux Machine) using Jetbrains Webstorm. <br>
+Made by Tarun Luthra (Github : [tarunluthra123](https://github.com/tarunluthra123))
+## React JS Documentation
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
